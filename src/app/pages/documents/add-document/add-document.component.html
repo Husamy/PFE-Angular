@@ -1,0 +1,60 @@
+<div class="container mt-5" style="padding-bottom : 2rem ; padding-left: 1rem; padding-right: 1rem;">
+  <h1 class="text-center mb-3"><mat-icon>cloud_upload</mat-icon>
+    Add Document</h1>
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <div class="input-group has-validation">
+            <span class="input-group-text"><i class="bi bi-file-earmark-check"></i></span>
+            <input type="text" class="form-control" formControlName="title" id="title" placeholder="Document Title" required>
+            <div class="invalid-feedback">
+              Title is required.
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="Description" class="form-label">Description <span class="text-muted"></span></label>
+          <input type="Description" class="form-control" formControlName="description" id="Description" placeholder="Place the description here  ">
+          <div class="invalid-feedback">
+            Please enter a description for your file 
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="privacy" class="form-label">Privacy</label>
+            <select class="form-select"  formControlName="privacy" id="privacy" required>
+              <option value="">Choose...</option>
+              <option value="public"><i class="bi bi-globe-americas"></i>Public</option>
+              <option value="private">Private</option>
+            </select>
+          </div>
+          <div class="col">
+            <label for="type" class="form-label">Type</label>
+            <select class="form-select" formControlName="type" id="type" required>
+              <option value="">Choose...</option>
+              <option value="PDF"><i class="bi bi-file-pdf"></i>PDF</option>
+              <option value="XML"><i class="bi bi-filetype-xml"></i>XML</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-3">
+          <div class="file-uploader" ngx-dropzone (change)="onSelect($event)">
+            <ngx-dropzone-label>
+              <img src="./assets/images/add_file.png" width="200px" alt="Your Image Alt Text">
+              <p>Drag and drop a file here</p>
+            </ngx-dropzone-label>
+            <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+              <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+            </ngx-dropzone-preview>
+          </div>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary" (click)="onSubmit()" form="form">Submit</button>
+          <button type="button" class="btn btn-secondary ms-2" (click)="onCancel()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px; height : 100vh">
+  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <img src="./assets/images/logo.png" alt="logo" width="40" height="32">
+      <span class="fs-4">Application</span>
+  </a>
+  <hr>
+  <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+          <a [routerLink]="'/dashboard'" class="nav-link active" aria-current="page">
+              <mat-icon>home</mat-icon>
+              Home
+          </a>
+      </li>
+      <li class="nav-item">
+          <a [routerLink]="'/me'" class="nav-link text-white " aria-current="page">
+              <mat-icon>account_circle</mat-icon>
+              Profile
+          </a>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="'/organisation'" class="nav-link text-white " aria-current="page">
+            <mat-icon>home</mat-icon>
+            Organisation
+        </a>
+    </li>
+      <li>
+          <a [routerLink]="'/dashboard'" class="nav-link text-white">
+              <mat-icon>folder</mat-icon>
+              Documents
+          </a>
+      </li>
+      <li>
+          <a [routerLink]="'/request'" class="nav-link text-white">
+              <mat-icon>share</mat-icon>
+              request
+          </a>
+      </li>
+  </ul>
+  <hr>
+  <a (click)="logout()"class="nav-link text-white">
+      <mat-icon>forward</mat-icon>
+      Sign Out
+  </a>
+</div>
+
+<!-- parent container that holds the content -->
+<div class="flex-grow-1">
+  <!-- your content goes here -->
+</div>

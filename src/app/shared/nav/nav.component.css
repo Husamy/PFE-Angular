@@ -1,0 +1,35 @@
+.navbar {
+  height: 64px;
+  padding: 0 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #333;
+}
+
+.navbar .logo {
+  display: block;
+}
+
+.navbar .nav-buttons {
+  margin-left: auto;
+}
+
+.navbar .logout-button {
+  background-color: #2196f3;
+  color: #fff;
+  margin-right: 8px;
+}
+
+.navbar .login-button {
+  background-color: #5a67d8;
+  color: #fff;
+  margin-right: 8px;
+}
+
+.navbar .register-button {
+  background-color: #48bb78;
+  color: #fff;
+}
