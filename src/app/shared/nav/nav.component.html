@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary rounded" aria-label="Thirteenth navbar example">
+  <div class="container-fluid">
+   
+
+    <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
+      <ul class="navbar-nav col-lg-6 justify-content-lg-end flex-lg-grow-1">
+        <div class="d-flex align-items-center">
+          <img src="./assets/images/user.png" [routerLink]="['/profile',user.id]" width="50px" height="50px" style="border: 1px solid black; border-radius: 50%;">
+          <div class="d-block">
+            <b >{{user.first_name}}_{{user.last_name}}</b><br>
+            {{user.email}}
+          </div>
+        </div>
+      </ul>
+      <div class="d-lg-flex col-lg-3 justify-content-lg-end">
+<button mat-button (click)="logout()"> <i class="bi bi-box-arrow-right"></i> logout</button>        </div>
+    </div>
+  </div>
+</nav>

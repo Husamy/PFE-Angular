@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DocumentService } from 'src/app/services/document.service';
-import { ConfirmDeleteComponent } from '../dialog/confirm-delete/confirm-delete.component';
+import { ConfirmDeleteComponent } from '../../dialog/confirm-delete/confirm-delete.component';
 
 @Component({
   selector: 'app-requests',
@@ -10,9 +10,11 @@ import { ConfirmDeleteComponent } from '../dialog/confirm-delete/confirm-delete.
 })
 export class RequestsComponent {
   requests :any ; 
+  
+  
   constructor(public dialog: MatDialog , private documentservice : DocumentService) {}
   ngOnInit(){
-    this.documentservice.getrequests().subscribe(response => {this.requests = response, console.log(response)} )
+  this.documentservice.getrequests().subscribe(response => {this.requests = response, console.log(response)} )
   }
   
 
@@ -30,7 +32,7 @@ export class RequestsComponent {
   }
 
  
-  confirmDelete(request: any): void {
+  deleteRequest(request: any): void {
     const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
       width: '400px',
       data: {

@@ -1,0 +1,56 @@
+<div class="main-content">
+  <div class="container mt-3">
+    <!-- Table -->
+    <h2 class="mb-5">Signing Requests</h2>
+    <div class="row">
+      <div class="col">
+        <div class="card shadow">
+          <div class="card-header border-0">
+            <h3 class="mb-0">Request Table</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">File Type</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Privacy</th>
+                  <th scope="col">Signed Status</th>
+                  <th scope="col">Owner</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let request of requests">
+                  <td>
+                    <ng-container *ngIf="request.document.filetype==='.pdf'">
+                      <img alt="PDF" src="./assets/images/pdf.png" width="40">
+                    </ng-container>
+                    <ng-container *ngIf="request.document.filetype==='.xml'">
+                      <img alt="XML" src="/assets/images/xml.jpg" width="40">
+                    </ng-container>
+                  </td>
+                  <td>{{ request.document.title }}</td>
+                
+                  <td>{{ request.document.privacy }}</td>
+                  <td>
+                    <span class="badge badge-dot mr-4 ">
+                      <i class="{{ request.signed_status ? 'bg-success' : 'bg-warning' }}"></i> {{ request.signed_status }}
+                    </span>
+                  </td>
+                  
+                  
+                  <td>{{ request.owner }}</td>
+                  <button type="button" class="btn btn-icon" (click)="deleteRequest(request)">
+                    <i class="bi bi-x-lg"></i>
+                  </button>
+                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,38 +1,87 @@
-import { HttpClientModule ,HttpClient , HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environements/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DocumentService {
 
+  private baseUrl: string = environment.documentUrl;
+
   constructor(private http: HttpClient) { }
-  
-   add(data: any) {
-    return  this.http.post<any>('http://192.168.1.63:8003/documents/doc/',data);
+
+  update(data: any, id: any): Observable<any> {
+    const url = `${this.baseUrl}/documents/doc/${id}/`;
+    return this.http.put<any>(url, data).pipe(
+      catchError((error: any) => {
+        return throwError(error);
+      })
+    );
   }
 
-   get() {
-    return  this.http.get<any[]>('http://192.168.1.63:8003/documents/doc/all/');
-  }
-   delete(id: any) {
-    const url = `http://192.168.1.63:8003/documents/doc/${id}/`;
-    return  this.http.delete<any>(url);
-  }
-  requestdelete(id : any ){
-    const url = `http://192.168.1.63:8003/documents/requestdelete/${id}/`;
-    return  this.http.delete<any>(url);  }
-   getrequests() {
-    return  this.http.get<any>('http://192.168.1.63:8003/documents/requestslist/');
+  add(data: any): Observable<any> {
+    const url = `${this.baseUrl}/documents/doc/`;
+    return this.http.post<any>(url, data).pipe(
+      catchError((error: any) => {
+        return throwError(error);
+      })
+    );
   }
 
-   addrequest(data: any) {
-    return  this.http.post<any>('http://192.168.1.63:8003/documents/requests/',data);
+  get(): Observable<any[]> {
+    const url = `${this.baseUrl}/documents/doc/`;
+    return this.http.get<any[]>(url).pipe(
+      catchError((error: any) => {
+        return throwError(error);
+      })
+    );
   }
 
-   download(id: any) {
-    const url = `http://192.168.1.63:8003/documents/doc/${id}/download/`;
-    return  this.http.get<any>(url);
+  delete(id: any): Observable<any> {
+    const url = `${this.baseUrl}/documents/doc/${id}/`;
+    return this.http.delete<any>(url).pipe(
+      catchError((error: any) => {
+        return throwError(error);
+      })
+    );
   }
-  
+
+  requestdelete(id: any): Observable<any> {
+    const url = `${this.baseUrl}/documents/requestdelete/${id}/`;
+    return this.http.delete<any>(url).pipe(
+      catchError((error: any) => {
+        return throwError(error);
+      })
+    );
+  }
+
+  getrequests(): Observable<any> {
+    const url = `${this.baseUrl}/documents/requests/`;
+    return this.http.get<any>(url).pipe(
+      catchError((error: any) => {
+        return throwError(error);
+      })
+    );
+  }
+
+  addrequest(data: any): Observable<any> {
+    const url = `${this.baseUrl}/documents/requests/`;
+    return this.http.post<any>(url, data).pipe(
+      catchError((error: any) => {
+        return throwError(error);
+      })
+    );
+  }
+
+  download(id: any): Observable<any> {
+    const url = `${this.baseUrl}/documents/doc/${id}/download/`;
+    return this.http.get<any>(url).pipe(
+      catchError((error: any) => {
+        return throwError(error);
+      })
+    );
+  }
 }

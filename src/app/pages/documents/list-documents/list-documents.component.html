@@ -7,37 +7,46 @@
       </button>
     </div>
   </div>
-    <div *ngIf="documents && documents.length > 0; else noDocuments">
-    
-      <div class="row">
-        <div class="col-md-4" *ngFor="let document of documents">
-          <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
-              <strong class="d-inline-block mb-2" [ngClass]="{'text-success': document.privacy === 'public', 'text-danger': document.privacy !== 'public'}">{{ document.privacy }}</strong>
-              <h3 class="mb-0">{{ document.title }}</h3>
-              <div class="mb-1 text-muted">
-                <span class="text-muted">
-                  <i class="bi bi-filetype-exe"></i>                  {{ document.filetype }}
-                </span>
-              </div>
-                      <p class="card-text mb-auto" style="margin-top: 0.5rem;">{{ document.description }}</p>
-                      <div class="d-flex justify-content-between align-items-center mt-2">
-                        <button mat-raised-button color="warn" class="flex-grow-1 mr-2" (click)="delete(document)">
-                          <mat-icon>delete</mat-icon> delete 
-                        </button>
-                        
-                      </div>
-                      
-                      
-                      
-              <button mat-raised-button style="margin-top: 0.5rem;" color="primary" (click)="addrequest(document)">Request For Sign</button>
+  <div *ngIf="documents && documents.length > 0; else noDocuments">
+
+    <div class="row">
+      <div class="col-md-4" *ngFor="let document of documents">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+          <div class="col p-4 d-flex flex-column position-static">
+            <div class="d-flex justify-content-between align-items-center">
+              <strong class="d-inline-block mb-2" [ngClass]="{'text-success': document.privacy === 'public', 'text-danger': document.privacy !== 'public'}" *ngIf="!isEditing">{{ document.privacy }}</strong>
+              <button mat-icon-button color="primary" style="margin-left: 1rem;" (click)="isEditing = !isEditing">
+                <i class="bi bi-pencil-fill"></i>
+              </button>
+              <button mat-icon-button color="primary" style="margin-left: 1rem;" *ngIf="isEditing" (click)="save(document)">
+                <i class="bi bi-save"></i>
+              </button>
+              
             </div>
-           
             
             
+            <select class="form-select mb-3" *ngIf="isEditing" [(ngModel)]="document.privacy">
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+            </select>
+            <h3 class="mb-0">{{ document.title }}</h3>
+            <div class="mb-1 text-muted">
+              <span class="text-muted">
+                <i class="bi bi-filetype-exe"></i>                  {{ document.filetype }}
+              </span>
+            </div>
+            <p class="card-text mb-auto" style="margin-top: 0.5rem;" *ngIf="!isEditing">{{ document.description }}</p>
+            <textarea class="form-control mb-3" rows="4" *ngIf="isEditing" [(ngModel)]="document.description"></textarea>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <button mat-raised-button color="warn" class="flex-grow-1 mr-2" (click)="delete(document)">
+                <mat-icon>delete</mat-icon> delete
+              </button>
+            </div>
+            <button mat-raised-button style="margin-top: 0.5rem;" color="primary" (click)="addrequest(document)">Request For Sign</button>
           </div>
-        </div><nav></nav>
-      </div>
+        </div>
+      </div><nav></nav>
+    </div>
   </div>
   <ng-template class="nodocs" #noDocuments>
     <div class="d-flex flex-column justify-content-center align-items-center text-center">
@@ -52,4 +61,4 @@
       </div>
     </div>
   </ng-template>
-</div>
+  

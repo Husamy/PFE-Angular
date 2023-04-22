@@ -1,3 +1,4 @@
+import { SendInvitationComponent } from './../pages/organisations/send-invitation/send-invitation.component';
 import { HttpClientModule ,HttpClient , HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
@@ -14,14 +15,15 @@ export class AuthService {
 
   refreshToken(): Observable<any> {
     const refreshToken = this.getRefreshToken();
-    const headers = { Authorization: `Bearer ${refreshToken}` };
-    return this.http.post<any>(this.refreshUrl, {}, { headers });
+    const data = { 'refresh': refreshToken };
+    return this.http.post<any>(this.refreshUrl, data);
   }
+  
 
   logout(): void {
     this.cookieService.delete(this.TOKEN_KEY);
     this.cookieService.delete(this.REFRESH_KEY);
-    // Redirect the user to the login page or show a message
+    this.http.post('http://192.168.1.63:8002/api/logout/',{});
   }
 
   getToken(): string {
@@ -44,8 +46,16 @@ export class AuthService {
     this.cookieService.set(this.REFRESH_KEY, token, expirationDate, '/', '', true, 'Strict');  
   }
   deletetoken(){}
+  getme(){
+    return this.http.get<any>('http://192.168.1.63:8002/api/users/');
+  }
+  getuser(id : any ){
+    return this.http.get<any>(`http://192.168.1.63:8002/api/users/${id}`)
+  }
+  updateUser(data :any){
+    return this.http.put<any>('http://192.168.1.63:8002/api/update/',data)
+  }
       signup(userObj:any){
-      
         return this.http.post<any>('http://192.168.1.63:8002/api/users/',userObj);
       }
       loginfn(loginObj:any){
@@ -77,7 +87,7 @@ export class AuthService {
         return this.http.get<any>('http://192.168.1.63:8002/api/request/create/')
       }
       getinvitations(){
-        return this.http.get<any>('http://192.168.1.63:8002/api/invitations/create/');
+        return this.http.get<any>('http://192.168.1.63:8002/api/invitation/create/');
       }
       deleteInvitation(id : any){
         const url = `http://192.168.1.63:8002/api/invitation/delete/${id}/`;
@@ -95,7 +105,7 @@ export class AuthService {
       } 
       acceptInvitation(id : any ){
         const data = { 'request_status' : 'Accepted'}
-        const url = `http://192.168.1.63:8002/api/invtation/update/${id}/`
+        const url = `http://192.168.1.63:8002/api/invitation/update/${id}/`
         return this.http.put<any>(url,data)
       }
       RejectedRequest(id : any){
@@ -105,8 +115,11 @@ export class AuthService {
       } 
       RejectedInvitation(id : any ){
         const data = { 'request_status' : 'Rejected'}
-        const url = `http://192.168.1.63:8002/api/invtation/update/${id}/`
+        const url = `http://192.168.1.63:8002/api/invitation/update/${id}/`
         return this.http.put<any>(url,data)
+      }
+      sendinvitation(form : any ){
+        return this.http.post<any>('http://192.168.1.63:8002/api/invitation/create/',form)
       }
 
 

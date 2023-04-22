@@ -13,6 +13,7 @@ import { DialogSignComponent } from '../../dialog-sign/dialog-sign.component';
 export class ListDocumentsComponent {
   constructor (private dialog : MatDialog , private documentservice : DocumentService ){}
   documents : any ;
+  isEditing : any 
   ngOnInit(){
     this.documentservice.get().subscribe(response => {this.documents = response; console.log(response)})
   }
@@ -27,9 +28,7 @@ export class ListDocumentsComponent {
   download(document:any){
     this.documentservice.download(document.id).subscribe(response => console.log(response));
   }
-update(document:any){
-  
-}
+
 
 addrequest(document: any): void {
   const dialogRef = this.dialog.open(DialogSignComponent, {
@@ -40,10 +39,25 @@ addrequest(document: any): void {
   });
   dialogRef.afterClosed().subscribe(result => {
     const fromdata = new FormData() ; 
-    fromdata.append('owner',document.owner);
     fromdata.append('document_id',document.id);
-    console.log(fromdata)
     this.documentservice.addrequest(fromdata).subscribe(response => {console.log(response)});
   });
 }
+
+toggleEditMode(document: Document) {
+  this.isEditing = true
+}
+  save(document: any): void {
+    const formdata = new FormData();
+    formdata.append('privacy',document.privacy)
+    formdata.append('description',document.description)
+    this.documentservice.update(formdata,document.id).subscribe( response => {
+      console.log(response)
+    })
+  }
+  
+  cancelEdit(document: any): void {
+  // handle canceling of document editing here
+  }
+
 }

@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { InvitationsComponent } from './../../invitations/invitations.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { Component } from '@angular/core';
+import { UserRequestsComponent } from '../../user-requests/user-requests.component';
+import { SendInvitationComponent } from '../send-invitation/send-invitation.component';
 
 @Component({
   selector: 'app-admin-interface',
@@ -10,39 +12,46 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin-interface.component.css']
 })
 export class AdminInterfaceComponent {
-  constructor(private authservice : AuthService , private dialog : MatDialog ){}
   documentsAddedToday: number = 0;
   documentsAddedThisMonth: number = 0;
   documentsAddedThisYear: number = 0;
   requestsReceived: number = 0;
   logs : any
-  Requests = [
-    {
-      email: 'john@example.com',
-      message: 'I am interested in joining your company!',
-      date: '2023-04-04T10:30:00.000Z'
-    },
-    {
-      email: 'jane@example.com',
-      message: 'Can you tell me more about the position?',
-      date: '2023-04-02T15:45:00.000Z'
-    },
-    {
-      email: 'mike@example.com',
-      message: 'I have several years of experience in the field and would love to be part of your team.',
-      date: '2023-03-30T09:15:00.000Z'
-    }
-  ];
+  myrequests : any 
+  myinvitations : any 
+  constructor(private authservice : AuthService , private dialog : MatDialog ){}
+  
+  
   users : any ; 
   ngOnInit(){
     this.authservice.getusers().subscribe(response => {this.users = response ; console.log(response)});
     this.authservice.timestampp().subscribe(response => { this.logs = response ;console.log(response)})
   }
   invitation(){
+    console.log(this.myinvitations)
+
     const dialogRef = this.dialog.open(InvitationsComponent, {
       width: '600px',
-     
+      data :{ admin : true }
     });
-    
+   
+
   }
+    requests(){
+      const dialogRef = this.dialog.open(UserRequestsComponent, {
+        width: '600px',
+        data :{ admin : true }
+
+        
+      });  
+  }
+  sendinvitation(){
+    const dialogRef = this.dialog.open(SendInvitationComponent, {
+      width: '600px',
+      data :{ admin : true }
+
+      
+    });  
+  }
+  
 }

@@ -1,5 +1,10 @@
+import { UserdataService } from './../../userdata.service';
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { AddDocumentComponent } from 'src/app/pages/documents/add-document/add-document.component';
+import { AddOrganisationComponent } from 'src/app/pages/organisations/add-organisation/add-organisation.component';
+import { CreateOrganisationComponent } from 'src/app/pages/organisations/create-organisation/create-organisation.component';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,16 +13,40 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-constructor(private auth:AuthService , private router : Router){}
+  userOrganization : any
+    organisation : any
+constructor(private UserdataService : UserdataService,private authservice:AuthService , private router : Router, private dialog : MatDialog){}
 
-logout(){
-  this.auth.logout();
-  this.auth.deletetoken();
-  window.location.reload();
-
+ngOnInit() {
+  this.UserdataService.getSharedUserData().subscribe(userData => {
+    this.userOrganization = userData[0].organisation;
+  });
 }
-isActive(routerLink: string): boolean {
-  return this.router.isActive(routerLink, true);
+addDocument(){
+  const dialogRef = this.dialog.open(AddDocumentComponent,{
+    width:'700px'});
 }
+joinCompany(){
+  const dialogRef = this.dialog.open(AddOrganisationComponent, {
+  width: '500px',
+ 
+});
+dialogRef.afterClosed().subscribe(result => {
+  const fromdata = new FormData() ; 
+  
+  this.authservice.joincompany(fromdata).subscribe(response => {console.log(response)});
+});
+}
+createCompany(){
 
+  const dialogRef = this.dialog.open(CreateOrganisationComponent, {
+    width: '500px',
+   
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+   
+    window.location.reload()
+  });
+}
 }

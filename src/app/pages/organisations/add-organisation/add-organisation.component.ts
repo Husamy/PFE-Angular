@@ -29,7 +29,6 @@ export class AddOrganisationComponent {
       fromdata.append('message', this.form.value.message);
       console.log(fromdata);
       this.authservice.joincompany(fromdata).subscribe(response => {
-        console.log(response);
         window.location.reload()
         this.dialogRef.close();
       });

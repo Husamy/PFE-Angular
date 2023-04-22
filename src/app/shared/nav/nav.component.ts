@@ -1,3 +1,4 @@
+import { UserdataService } from './../../userdata.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -9,15 +10,18 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent {
-  private readonly TOKEN_KEY = 'myapp_token';
-  isLoggedIn: any  ;
+  user : any ;
+  constructor(private router: Router , private authservice : AuthService , private userdata : UserdataService) { 
+     this.userdata.getSharedUserData().subscribe((userData) => {
+      if (userData && userData.length > 0) {
+        this.user = userData[0];
+      } else {
+        console.error('UserdataService returned an empty array.');
+      }
+    });
+  }
 
-  constructor(private router: Router , private sessionService : AuthService) { }
-  ngOnInit() {
-      this.isLoggedIn = sessionStorage.getItem(this.TOKEN_KEY);    }
-  
-
+ 
   logout() {
-    sessionStorage.removeItem(this.TOKEN_KEY);
-  this.router.navigate(['/login'])  }
+  this.authservice.logout();  }
 }

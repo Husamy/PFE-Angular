@@ -1,49 +1,63 @@
-<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px; height : 100vh">
-  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-      <img src="./assets/images/logo.png" alt="logo" width="40" height="32">
-      <span class="fs-4">Application</span>
+<div class="flex-shrink-0 p-3" style="width: 280px; height: 100vh;">
+  <a [routerLink]="''" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+    <img width="24" height="24" src="./assets/images/logo.png">
+    <span class="fs-5 fw-semibold" style="color: black;">DigitalBerry</span>
   </a>
-  <hr>
-  <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
-          <a [routerLink]="'/dashboard'" class="nav-link active" aria-current="page">
-              <mat-icon>home</mat-icon>
-              Home
-          </a>
-      </li>
-      <li class="nav-item">
-          <a [routerLink]="'/me'" class="nav-link text-white " aria-current="page">
-              <mat-icon>account_circle</mat-icon>
-              Profile
-          </a>
-      </li>
-      <li class="nav-item">
-        <a [routerLink]="'/organisation'" class="nav-link text-white " aria-current="page">
-            <mat-icon>home</mat-icon>
-            Organisation
-        </a>
+  <ul class="list-unstyled ps-0">
+    <li class="mb-1">
+      <button class="btn d-inline-flex align-items-center rounded border-0 collapsed" [routerLink]="''">
+        <i class="bi bi-house-door-fill m-1"></i>                 <b>Home</b>
+      </button>
     </li>
-      <li>
-          <a [routerLink]="'/dashboard'" class="nav-link text-white">
-              <mat-icon>folder</mat-icon>
-              Documents
-          </a>
-      </li>
-      <li>
-          <a [routerLink]="'/request'" class="nav-link text-white">
-              <mat-icon>share</mat-icon>
-              request
-          </a>
-      </li>
-  </ul>
-  <hr>
-  <a (click)="logout()"class="nav-link text-white">
-      <mat-icon>forward</mat-icon>
-      Sign Out
-  </a>
-</div>
+    <li class="mb-1">
+      <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+        <i class="bi bi-building-fill m-1"></i> Company
+      </button>
+      <div class="collapse" id="dashboard-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a [routerLink]="'/organisation'" class="link-dark d-inline-flex text-decoration-none rounded">My Company</a></li>
+          <li>
+            <a *ngIf="!userOrganization" (click)="joinCompany()" class="link-dark d-inline-flex text-decoration-none rounded">Join Company</a>
+            <a *ngIf="userOrganization" class="link-dark d-inline-flex text-decoration-none rounded" [ngClass]="{'disabled': true}">Join Company</a>
+          </li>
+          <li>
+            <a *ngIf="!userOrganization" (click)="createCompany()" class="link-dark d-inline-flex text-decoration-none rounded">Create Company</a>
+            <a *ngIf="userOrganization" class="link-dark d-inline-flex text-decoration-none rounded" [ngClass]="{'disabled': true}">Create Company</a>
+          </li>
+          
 
-<!-- parent container that holds the content -->
-<div class="flex-grow-1">
-  <!-- your content goes here -->
+        </ul>
+      </div>
+    </li>
+    <li class="mb-1">
+      <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#documents-collapse" aria-expanded="false">
+        <i class="bi bi-folder-fill m-1"></i> Documents
+      </button>
+      <div class="collapse" id="documents-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a (click)="addDocument()" class="link-dark d-inline-flex text-decoration-none rounded"> Add Document</a></li>
+          <li><a [routerLink]="'/documents/Mydocuments'" class="link-dark d-inline-flex text-decoration-none rounded">My Documents</a></li>
+          <li><a [routerLink]="'/documents/SharedDocuments'" class="link-dark d-inline-flex text-decoration-none rounded">Shared Documents</a></li>
+          <li><a [routerLink]="'/documents/OrganisationDocuments'" class="link-dark d-inline-flex text-decoration-none rounded">Organisation Documents</a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="mb-1">
+      <button  class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#logs-collapse" aria-expanded="false">
+        <i class="bi bi-list-check m-1"></i>Logs
+      </button>
+      <div class="collapse" id="logs-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a [routerLink]="'/logs/user'" class="link-dark d-inline-flex text-decoration-none rounded"> Connexion </a></li>
+          <li><a [routerLink]="'/logs/doc'" class="link-dark d-inline-flex text-decoration-none rounded">Document </a></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
 </div>
+<style>
+  .sidebar {
+    height: 100vh;
+    overflow-y: auto;
+  }
+</style>

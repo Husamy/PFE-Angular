@@ -29,7 +29,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import {MatSelectModule} from '@angular/material/select'; 
 import { MatListModule } from '@angular/material/list';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { RequestsComponent } from './requests/requests.component';
+import { RequestsComponent } from './documents/requests/requests.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ConfirmDeleteComponent } from './dialog/confirm-delete/confirm-delete.component';
 import { AskForRequestComponent } from './ask-for-request/ask-for-request.component';
@@ -45,7 +45,13 @@ import { JoinRequestsComponent } from './join-requests/join-requests.component';
 import { HomeHeroComponent } from './home-hero/home-hero.component';
 import { AdminInterfaceComponent } from './organisations/admin-interface/admin-interface.component';
 import { UserRequestsComponent } from './user-requests/user-requests.component';
- 
+import { MembresComponent } from './organisations/membres/membres.component';
+import { SendInvitationComponent } from './organisations/send-invitation/send-invitation.component';
+import { ProfileComponent } from './profile/profile.component';
+import { FormsModule } from '@angular/forms';
+import { UserLogsComponent } from './logs/user-logs/user-logs.component';
+import { DocumentLogsComponent } from './logs/document-logs/document-logs.component';
+
 @NgModule({
   declarations: [
     
@@ -67,7 +73,13 @@ import { UserRequestsComponent } from './user-requests/user-requests.component';
     JoinRequestsComponent,
     HomeHeroComponent,
     AdminInterfaceComponent,
-    UserRequestsComponent
+    UserRequestsComponent,
+    MembresComponent,
+    SendInvitationComponent,
+    ProfileComponent,
+    UserLogsComponent,
+    DocumentLogsComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -81,6 +93,7 @@ import { UserRequestsComponent } from './user-requests/user-requests.component';
     MatSnackBarModule,
     RouterModule,
     MatCardModule,
+    FormsModule,
     ReactiveFormsModule,
     MatToolbarModule,
     AppRoutingModule,

@@ -41,13 +41,8 @@ export class AddDocumentComponent {
     const file = this.files[0];
   
     const formdata = new FormData();
-    formdata.append('title',this.form.get('title')?.value);
     formdata.append('description',this.form.get('description')?.value);
-    formdata.append('privacy',this.form.get('privacy')?.value);
-    formdata.append('typefile',this.form.get('type')?.value);
     formdata.append('fileDoc',file);
-    formdata.append('owner','husammorbi@gmail.com');
-    formdata.append('user_id','1');
   
     await this.docservice.add(formdata).toPromise();
     this.dialogRef.close();

@@ -25,7 +25,7 @@ export class SignComponent {
     console.log(this.signInForm.value)
     if (this.signInForm.valid){
       const  data = {
-        first_name : this.signInForm.get('first_namae')?.value,
+        first_name : this.signInForm.get('first_name')?.value,
         last_name : this.signInForm.get('last_name')?.value,
         email :this.signInForm.get('email')?.value,
         password :this.signInForm.get('password')?.value

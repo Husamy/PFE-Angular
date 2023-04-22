@@ -16,17 +16,19 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
 
     const authToken = this.auth.getToken();
     if (authToken) {
+      console.log(authToken)
       request = this.addToken(request, authToken);
     }
     return next.handle(request).pipe(
       catchError((error) => {
-        // Check if the error is 401 Unauthorized
+        // lahne besh itechki kan el request rajatlou unauthorised manehtha el token expiret ! 
         if (error.status === 401) {
-          // Try refreshing the access token
+          // lahne yemshii yemshi yamel mo7awel emt3 irefresh token 
           return this.auth.refreshToken().pipe(
             switchMap((newToken) => {
+              console.log(newToken)
               // Retry the request with the new access token
-              request = this.addToken(request, newToken);
+              request = this.addToken(request, newToken.access);
               return next.handle(request);
             }),
             catchError((refreshError) => {
@@ -47,6 +49,8 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
       setHeaders: {
         Authorization: `Bearer ${token}`
       }
-    });
+      
+    }
+    );
   }
 }
