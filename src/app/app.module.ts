@@ -21,6 +21,7 @@ import { DndDirective } from './directives/dnd.directive';
 import {MatDialogModule} from '@angular/material/dialog'; 
 import { AuthInterceptorInterceptor } from './interceptor/auth-interceptor.interceptor';
 import {MatSidenavModule} from '@angular/material/sidenav';
+
 import * as CryptoJS from 'crypto-js';
 
 

@@ -40,19 +40,26 @@ import { DialogSignComponent } from './dialog-sign/dialog-sign.component';
 import { OrganisationComponent } from './organisations/organisation/organisation.component';
 import { AddOrganisationComponent } from './organisations/add-organisation/add-organisation.component';
 import { CreateOrganisationComponent } from './organisations/create-organisation/create-organisation.component';
-import { InvitationsComponent } from './invitations/invitations.component';
+import { InvitationsComponent } from './organisations/invitations/invitations.component';
 import { JoinRequestsComponent } from './join-requests/join-requests.component';
 import { HomeHeroComponent } from './home-hero/home-hero.component';
 import { AdminInterfaceComponent } from './organisations/admin-interface/admin-interface.component';
-import { UserRequestsComponent } from './user-requests/user-requests.component';
+import { UserRequestsComponent } from './organisations/user-requests/user-requests.component';
 import { MembresComponent } from './organisations/membres/membres.component';
 import { SendInvitationComponent } from './organisations/send-invitation/send-invitation.component';
 import { ProfileComponent } from './profile/profile.component';
 import { FormsModule } from '@angular/forms';
 import { UserLogsComponent } from './logs/user-logs/user-logs.component';
 import { DocumentLogsComponent } from './logs/document-logs/document-logs.component';
-
-@NgModule({
+import { SignRequestsComponent } from './organisations/sign-requests/sign-requests.component';
+import {MatSortModule} from '@angular/material/sort';
+import {MatChipsModule} from '@angular/material/chips'; 
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { CertificateComponent } from './dialog/certificate/certificate.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+ @NgModule({
   declarations: [
     
     LoginComponent,
@@ -79,9 +86,13 @@ import { DocumentLogsComponent } from './logs/document-logs/document-logs.compon
     ProfileComponent,
     UserLogsComponent,
     DocumentLogsComponent,
+    SignRequestsComponent,
+    CertificateComponent,
+    
     
   ],
   imports: [
+    
     CommonModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
@@ -108,6 +119,12 @@ import { DocumentLogsComponent } from './logs/document-logs/document-logs.compon
     MatListModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatSortModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatChipsModule,
+    MatProgressSpinnerModule,
+    ClipboardModule
       ],
   providers:[
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorInterceptor, multi: true }

@@ -1,4 +1,7 @@
+import { Document } from 'src/app/interfaces/document';
+import { DocumentService } from './../../../services/document.service';
 import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-public-documents',
@@ -6,56 +9,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./public-documents.component.css']
 })
 export class PublicDocumentsComponent {
-  documents= [
-    {
-      title: "Document 1",
-      description :"Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.",
-      type: "pdf",
-      privacy: "Public",
-      owner: "John Doe",
-      image: "https://via.placeholder.com/350x150",
-    },
-    {
-      title: "Document 2",
-      description :"Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.",
-      type: "xml",
-      privacy: "Private",
-      owner: "Jane Doe",
-      image: "https://via.placeholder.com/350x150",
-    },
-    {
-      title: "Document 3",
-      description :"Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.",
-      type: "pdf",
-      privacy: "Public",
-      owner: "Bob Smith",
-      image: "https://via.placeholder.com/350x150",
-    },
-    {
-      title: "Document 3",
-      description :"Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.",
-      type: "xml",
-      privacy: "Public",
-      owner: "Bob Smith",
-      image: "https://via.placeholder.com/350x150",
-    },
-    {
-      title: "Document 3",
-      description :"Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.",
-      type: "xml",
-      privacy: "Public",
-      owner: "Bob Smith",
-      image: "https://via.placeholder.com/350x150",
-    },
-    {
-      title: "Document 3",
-      description :"Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.",
-      type: "xml",
-      privacy: "Public",
-      owner: "Bob Smith",
-      image: "https://via.placeholder.com/350x150",
-    }
-  ];
-  deleteDocument(document:any){}
-  contactOwner(document:any){}
+  documents !: Document[]  
+
+  constructor(private DocumentService : DocumentService  ) {
+    this.DocumentService.get().subscribe(response => {
+      console.log('response');
+        this.documents = response;
+      });
+   }
+
+delete(document:any){
+}
 }

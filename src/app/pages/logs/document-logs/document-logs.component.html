@@ -2,15 +2,13 @@
     <!-- Card Header - Dropdown -->
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">Document Logs</h6>
-      <div>
-        <label for="filterAction">Filter by Action:</label>
-        <select id="filterAction" (change)="applyFilters()" [(ngModel)]="selectedAction">
-          <option value="">All</option>
-          <option *ngFor="let action of actions" [value]="action">{{ action }}</option>
-        </select>
-        <label for="filterDate">Filter by Created Date:</label>
-        <input type="date" id="filterDate" (change)="applyFilters()" [(ngModel)]="selectedDate">
+      <div class="d-flex">
+        <div class="flex-grow-1 me-2">
+        <input type="text" class="form-control" style="border-radius: 2rem;" id="filterAction" placeholder="Filter by action" [(ngModel)]="selectedAction">
+        </div>
+        <button mat-raised-button color="primary" style="border-radius: 1rem;" (click)="applyFilters()">Search</button>
       </div>
+      
     </div>
     <div class="card-body">
       <div class="list-group">

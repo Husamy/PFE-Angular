@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { from } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
 import { AddDocumentComponent } from '../add-document/add-document.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogSignComponent } from '../../dialog-sign/dialog-sign.component';
+import { Document } from 'src/app/interfaces/document';
+import { CertificateComponent } from '../../dialog/certificate/certificate.component';
 
 @Component({
   selector: 'app-list-documents',
@@ -11,24 +13,47 @@ import { DialogSignComponent } from '../../dialog-sign/dialog-sign.component';
   styleUrls: ['./list-documents.component.css']
 })
 export class ListDocumentsComponent {
-  constructor (private dialog : MatDialog , private documentservice : DocumentService ){}
-  documents : any ;
+  constructor ( private snackbar : MatSnackBar , private dialog : MatDialog , private documentservice : DocumentService , private cdr: ChangeDetectorRef){}
+  documents : Array<Document> = [] ;
   isEditing : any 
   ngOnInit(){
     this.documentservice.get().subscribe(response => {this.documents = response; console.log(response)})
   }
   delete(document:any){
-    this.documentservice.delete(document.id).subscribe(response => console.log(response))
+    this.documentservice.delete(document.id).subscribe(response => {console.log(response)});
+    // lahne lezmna enzydou request.status fil return emt3 request 
+    this.ngOnInit();
+
+
+  }
+  showCertificate(document : Document){
+    const dialogRef = this.dialog.open(CertificateComponent, {
+      width: '500px' , 
+      data : document ,
+    });
+  }
+  validateSignature(){
+
+  }
+  expiration(){
 
   }
   openAddDocumentDialog() {
-    const dialogRef = this.dialog.open(AddDocumentComponent,{
-      width:'700px'});
-  }
+    
+  const dialogRef = this.dialog.open(AddDocumentComponent, {
+    width: '700px'
+  });
+
+  dialogRef.afterClosed().toPromise().then(() => {
+    this.ngOnInit()
+  });
+}
+
   download(document:any){
     this.documentservice.download(document.id).subscribe(response => console.log(response));
   }
 
+// fil add request lezmou itchecki kan el document deja aaleh request wala la
 
 addrequest(document: any): void {
   const dialogRef = this.dialog.open(DialogSignComponent, {
@@ -40,8 +65,18 @@ addrequest(document: any): void {
   dialogRef.afterClosed().subscribe(result => {
     const fromdata = new FormData() ; 
     fromdata.append('document_id',document.id);
-    this.documentservice.addrequest(fromdata).subscribe(response => {console.log(response)});
+    this.documentservice.addrequest(fromdata).subscribe(
+      response =>
+      {
+   
+        this.snackbar.open('Request added successfully!', 'Close', {
+          duration: 2000,});
+          this.ngOnInit();
+        }
+      );
   });
+
+  
 }
 
 toggleEditMode(document: Document) {

@@ -5,15 +5,11 @@ import { PublicDocumentsComponent } from './pages/documents/public-documents/pub
 import { RequestsComponent } from './pages/documents/requests/requests.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './auth.guard';
-import { AddDocumentComponent } from './pages/documents/add-document/add-document.component';
+import { AuthGuard } from './authguard/auth.guard';
 import { HomeComponent } from './pages/documents/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SignComponent } from './pages/sign/sign.component';
-import { LoginGuardGuard } from './login-guard.guard';
-import { AppComponent } from './app.component';
 import { OrganisationComponent } from './pages/organisations/organisation/organisation.component';
-import { JoinRequestsComponent } from './pages/join-requests/join-requests.component';
 import { ListDocumentsComponent } from './pages/documents/list-documents/list-documents.component';
 import { AllDocumentsComponent } from './pages/documents/all-documents/all-documents.component';
 import { AddOrganisationComponent } from './pages/organisations/add-organisation/add-organisation.component';
@@ -21,6 +17,8 @@ import { CreateOrganisationComponent } from './pages/organisations/create-organi
 import { MembresComponent } from './pages/organisations/membres/membres.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { UserLogsComponent } from './pages/logs/user-logs/user-logs.component';
+import { SignRequestsComponent } from './pages/organisations/sign-requests/sign-requests.component';
+import { AdminGuard } from './authguard/admin.guard';
 
 const routes: Routes = [
   {path:'',component:HomeHeroComponent,canActivate:[AuthGuard]},
@@ -33,8 +31,13 @@ const routes: Routes = [
     {path:'',component:OrganisationComponent},
     {path:'join',component:AddOrganisationComponent},
     {path:'create',component:CreateOrganisationComponent},
-    {path:'admin',component:AdminInterfaceComponent,},
-    {path:'membres',component:MembresComponent}
+    {path:'admin',
+    canActivate:[AuthGuard,AdminGuard],
+    children : [ 
+    { path: '' , component :AdminInterfaceComponent },
+    { path:'SigingRequest',component:SignRequestsComponent},
+    ]},
+        {path:'membres',component:MembresComponent}
   ]},
   {path:'documents',
    canActivate:[AuthGuard],
@@ -53,7 +56,12 @@ children:[
   {path:'user',component:UserLogsComponent},
   {path:'doc',component:DocumentLogsComponent}
 ]},
-  {path:'admin',component:AdminInterfaceComponent, canActivate:[AuthGuard]},
+{path:'admin',
+canActivate:[AuthGuard,AdminGuard],
+children : [ 
+{ path: '' , component :AdminInterfaceComponent },
+{ path:'SigingRequest',component:SignRequestsComponent},
+]},
 ];
 
 @NgModule({

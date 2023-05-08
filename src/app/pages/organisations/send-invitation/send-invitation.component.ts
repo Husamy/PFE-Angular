@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
+import { OrganisationService } from 'src/app/services/organisation.service';
 
 @Component({
   selector: 'app-send-invitation',
@@ -11,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class SendInvitationComponent {
   form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder , private authservice : AuthService, private dialogRef: MatDialogRef<SendInvitationComponent>) {
+  constructor(private formBuilder: FormBuilder , private OrganisationService : OrganisationService, private dialogRef: MatDialogRef<SendInvitationComponent>) {
     this.form = this.formBuilder.group({
       email: '',
 
@@ -26,7 +27,7 @@ export class SendInvitationComponent {
       const fromdata = new FormData();
       fromdata.append('guest', this.form.value.email);
       console.log(fromdata);
-      this.authservice.sendinvitation(fromdata).subscribe();
+      this.OrganisationService.sendinvitation(fromdata).subscribe();
       window.location.reload()
       this.dialogRef.close();
       }

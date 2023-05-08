@@ -1,37 +1,43 @@
-import { MatDialog, MatDialogRef , MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialogRef , MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
-import { Component , Inject } from '@angular/core';
+import { Component ,Inject } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { OrganisationService } from 'src/app/services/organisation.service';
 
 @Component({
-  selector: 'app-invitations',
-  templateUrl: './invitations.component.html',
-  styleUrls: ['./invitations.component.css']
+  selector: 'app-user-requests',
+  templateUrl: './user-requests.component.html',
+  styleUrls: ['./user-requests.component.css']
 })
-export class InvitationsComponent {
-  isAdmin : any ; 
-  invitations : any ;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any ,private AuthService : AuthService , private dialogRef : MatDialogRef<InvitationsComponent> ){}
+export class UserRequestsComponent {
+  requests : any ;
+  isAdmin : any 
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any  ,  private OrganisationService : OrganisationService , private DialogRef : MatDialogRef<UserRequestsComponent> ){}
   ngOnInit(){
-    this.AuthService.getinvitations().subscribe(response => { this.invitations = response ; console.log(response)}) ;
+    this.OrganisationService.getRequests().subscribe(response => { this.requests = response ; console.log(response)}) ;
     this.isAdmin = this.data.admin
+
   }
-  Accept(invitation:any){
+  Accept(request:any){
     
-    this.AuthService.acceptInvitation(invitation.id).subscribe( response => { 
+    this.OrganisationService.acceptRequest(request.id).subscribe( response => { 
       console.log();
-      this.dialogRef.close();
+      this.DialogRef.close();
 
     })
   }
-  Delete(invitaiton:any){
-    this.AuthService.deleteInvitation(invitaiton).subscribe( response => { 
+  Reject(request:any){
+    this.OrganisationService.rejectRequest(request.id).subscribe( response => { 
       console.log();
-      this.dialogRef.close();
+      this.DialogRef.close();
 
   })
 
 }
-getTimeDifference(x : any): string {
+Delete(request :any){}
+
+
+ getTimeDifference(x : any): string {
   const specifiedTime: Date = new Date(x);
   const currentTime: Date = new Date();
   const timeDifference: number = currentTime.getTime() - specifiedTime.getTime();
@@ -56,4 +62,7 @@ getTimeDifference(x : any): string {
     return `${secondsDifference} second${secondsDifference > 1 ? 's' : ''} ago`;
   }
 }
+
+
+
 }

@@ -1,6 +1,6 @@
 import { Router , NavigationExtras } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
 import { Component } from '@angular/core';
+import { OrganisationService } from 'src/app/services/organisation.service';
 
 @Component({
   selector: 'app-membres',
@@ -9,8 +9,8 @@ import { Component } from '@angular/core';
 })
 export class MembresComponent {
   users : any 
-  constructor ( private AuthService : AuthService , private Router : Router    ) { 
-  this.AuthService.getusers().subscribe(response => {this.users = response })
+  constructor ( private OrganisationService : OrganisationService , private Router : Router    ) { 
+  this.OrganisationService.getUsers().subscribe(response => {this.users = response })
 
   }
  navigateToProfile(userId: number, event: Event) {

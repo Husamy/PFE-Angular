@@ -1,10 +1,11 @@
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { InvitationsComponent } from './../../invitations/invitations.component';
+import { InvitationsComponent } from '../invitations/invitations.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { Component } from '@angular/core';
-import { UserRequestsComponent } from '../../user-requests/user-requests.component';
+import { UserRequestsComponent } from '../user-requests/user-requests.component';
 import { SendInvitationComponent } from '../send-invitation/send-invitation.component';
+import { OrganisationService } from 'src/app/services/organisation.service';
 
 @Component({
   selector: 'app-admin-interface',
@@ -19,16 +20,18 @@ export class AdminInterfaceComponent {
   logs : any
   myrequests : any 
   myinvitations : any 
-  constructor(private authservice : AuthService , private dialog : MatDialog ){}
+  constructor(private OrganisationService : OrganisationService , private dialog : MatDialog ){}
   
   
   users : any ; 
   ngOnInit(){
-    this.authservice.getusers().subscribe(response => {this.users = response ; console.log(response)});
-    this.authservice.timestampp().subscribe(response => { this.logs = response ;console.log(response)})
+    this.OrganisationService.getUsers().subscribe(response => {this.users = response ; console.log(response)});
+    this.OrganisationService.getRequests().subscribe(response => { this.myrequests =response }); 
+    this.OrganisationService.getInvitations().subscribe(response => { this.myinvitations =response }); 
+
   }
   invitation(){
-    console.log(this.myinvitations)
+   
 
     const dialogRef = this.dialog.open(InvitationsComponent, {
       width: '600px',

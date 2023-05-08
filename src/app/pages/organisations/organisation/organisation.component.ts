@@ -1,12 +1,12 @@
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { UserRequestsComponent } from './../../user-requests/user-requests.component';
-import { InvitationsComponent } from './../../invitations/invitations.component';
+import { UserdataService } from './../../../userdata.service';
+import { UserRequestsComponent } from '../user-requests/user-requests.component';
+import { InvitationsComponent } from '../invitations/invitations.component';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { AddOrganisationComponent } from '../add-organisation/add-organisation.component';
 import { CreateOrganisationComponent } from '../create-organisation/create-organisation.component';
-import { UserdataService } from 'src/app/userdata.service';
+import { OrganisationService } from 'src/app/services/organisation.service';
 
 @Component({
   selector: 'app-organisation',
@@ -18,22 +18,19 @@ export class OrganisationComponent  {
   organisation : any ;
   users :any 
   userinfo : any 
-  constructor(private dialog : MatDialog , private authservice : AuthService , private user : UserdataService){}
+  constructor(private dialog : MatDialog ,private UserdataService : UserdataService ,private AuthService:AuthService, private OrganisationService : OrganisationService ){}
   async ngOnInit() {
     try {
-      const response = await this.authservice.getOrganisation().toPromise();
-      this.organisation = response[0];
-      console.log(this.organisation)
+      const response = await this.OrganisationService.getOrganisation().toPromise();
+      this.organisation = response[0]
       if (this.organisation) {
         this.hasOrganization = true;
-        console.log(this.hasOrganization)
-        this.authservice.getusers().subscribe(response => {this.users = response })
+        this.OrganisationService.getUsers().subscribe(response => {this.users = response })
       } else {
-        console.log(this.organisation);
         this.hasOrganization = false;
       }
     } catch (error) {
-      console.log('Error:', error);
+      
     }
   }
   
@@ -64,9 +61,7 @@ export class OrganisationComponent  {
    
   });
   dialogRef.afterClosed().subscribe(result => {
-    const fromdata = new FormData() ; 
-    
-    this.authservice.joincompany(fromdata).subscribe(response => {console.log(response)});
+    this.ngOnInit()    
   });}
   createCompany(){
 
@@ -76,21 +71,15 @@ export class OrganisationComponent  {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-     
-      window.location.reload()
-    });
+        this.ngOnInit()
+      });
   }
    isAdminDisabled() {
-    this.user.getSharedUserData().subscribe(
-      userdata => {  this.userinfo = userdata;
-      }
-    ); 
+    this.UserdataService.getSharedUserData().subscribe(Response => { this.userinfo = Response})
     
     if (this.userinfo && this.userinfo.length > 0 && this.userinfo[0].email === this.organisation.owner) {
-      console.log(false)  
       return false;
     } else {
-      console.log(false)
       return true;
     }
   }

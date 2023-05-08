@@ -1,13 +1,14 @@
 <div *ngIf="hasOrganization; else noOrganization">
-  <div class="container px-4 py-5" id="hanging-icons">
+
+  <div class="container" style="padding: 2rem;" id="hanging-icons">
   <div class="row align-items-center">
     <h2 class="pb-2 border-bottom col">{{organisation.name}} Company </h2>
     <div class="col text-end">
      
-      <button mat-raised-button class="button m-2" color="warn" [routerLink]="'/admin'" [disabled]="isAdminDisabled()">
+      <button mat-raised-button class="button m-2" color="warn" [routerLink]="'/admin/'" [disabled]="isAdminDisabled()">
         <i class="bi bi-terminal-dash"></i> Admin Interface
       </button>
-      <button mat-raised-button class="button" color="primary" [routerLink]="'/admin'" [disabled]="isAdminDisabled()">
+      <button mat-raised-button class="button" color="primary" [routerLink]="'/admin'" disabled>
         <i class="bi bi-door-open"></i> Leave Company
       </button>
       
@@ -41,6 +42,7 @@
   </div>
 </div>
 <ng-template #noOrganization>
+
   <div class="container px-4 py-5" id="hanging-icons">
     
     <div class="row align-items-center">

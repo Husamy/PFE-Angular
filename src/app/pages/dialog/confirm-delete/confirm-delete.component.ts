@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class ConfirmDeleteComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any , private docservice : DocumentService) {}
   delette(){
-    console.log(this.data.id)
-    this.docservice.requestdelete(this.data.id).subscribe();
+    console.log(this.data)
+    this.docservice.requestdelete(this.data.request.document_id).subscribe();
   }
 }

@@ -1,5 +1,6 @@
 <div class="container px-4 py-5" id="hanging-icons">
   <div class="row align-items-center">
+    <mat-icon>files</mat-icon>
     <h2 class="pb-2 border-bottom col">My Documents</h2>
     <div class="col text-end">
       <button mat-raised-button class="button" color="primary" (click)="openAddDocumentDialog()">
@@ -8,19 +9,19 @@
     </div>
   </div>
   <div *ngIf="documents && documents.length > 0; else noDocuments">
-
+   
     <div class="row">
       <div class="col-md-4" *ngFor="let document of documents">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
           <div class="col p-4 d-flex flex-column position-static">
             <div class="d-flex justify-content-between align-items-center">
               <strong class="d-inline-block mb-2" [ngClass]="{'text-success': document.privacy === 'public', 'text-danger': document.privacy !== 'public'}" *ngIf="!isEditing">{{ document.privacy }}</strong>
-              <button mat-icon-button color="primary" style="margin-left: 1rem;" (click)="isEditing = !isEditing">
-                <i class="bi bi-pencil-fill"></i>
-              </button>
-              <button mat-icon-button color="primary" style="margin-left: 1rem;" *ngIf="isEditing" (click)="save(document)">
-                <i class="bi bi-save"></i>
-              </button>
+              <div class="justify-content-end">
+                <span class="badge bg-warning" (click)="showCertificate(document)">
+                  <i class="bi bi-patch-check-fill"></i> {{ expiration() }}
+                  </span>
+              </div>
+           
               
             </div>
             
@@ -34,6 +35,9 @@
               <span class="text-muted">
                 <i class="bi bi-filetype-exe"></i>                  {{ document.filetype }}
               </span>
+              <span class="badge " [ngClass]="{'bg-success': document.signed_status === 'Signed', 'bg-warning': document.signed_status !== 'Signed' && document.signed_status !== null, 'bg-danger': document.signed_status === 'Not Signed', 'bg-white': document.signed_status === null}">
+<i></i> {{ document.signed_status || 'Waiting' }}
+</span>
             </div>
             <p class="card-text mb-auto" style="margin-top: 0.5rem;" *ngIf="!isEditing">{{ document.description }}</p>
             <textarea class="form-control mb-3" rows="4" *ngIf="isEditing" [(ngModel)]="document.description"></textarea>
@@ -42,8 +46,10 @@
                 <mat-icon>delete</mat-icon> delete
               </button>
             </div>
-            <button mat-raised-button style="margin-top: 0.5rem;" color="primary" (click)="addrequest(document)">Request For Sign</button>
-          </div>
+            <button mat-raised-button style="margin-top: 0.5rem;" color="primary"
+            [disabled]="document.signed_status === 'Signed' || document.signed_status === 'Rejected'"
+            (click)="addrequest(document)">Request For Sign</button>
+              </div>
         </div>
       </div><nav></nav>
     </div>

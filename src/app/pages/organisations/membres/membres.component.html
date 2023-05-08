@@ -2,7 +2,7 @@
 <div class="card shadow mb-4 border-0">
     <!-- Card Header - Dropdown -->
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-      <h6 class="m-0 font-weight-bold text-primary">Company Membres </h6>
+      <a style="text-decoration: none;" [routerLink]="'/organisation/membres'"><h6 class="m-0 font-weight-bold text-primary " [routerLink]="'organisation/membres'">Company Membres </h6></a>
       
     </div>
     <div class="card-body">
@@ -15,7 +15,7 @@
             <p class="mb-0 opacity-75">{{ user.email }}</p>
           </div>
           <button mat-raised-button color="primary" (click)="navigateToProfile(user.id, $event)">
-            <i class="bi bi-chat-left-dots-fill"></i> Contact
+            <i class="bi bi-person-fill"></i> Profile
           </button>
                   </div>
       </a>

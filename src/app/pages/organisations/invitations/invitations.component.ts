@@ -1,42 +1,37 @@
-import { MatDialogRef , MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AuthService } from 'src/app/services/auth.service';
-import { Component ,Inject } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { MatDialog, MatDialogRef , MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Component , Inject } from '@angular/core';
+import { OrganisationService } from 'src/app/services/organisation.service';
 
 @Component({
-  selector: 'app-user-requests',
-  templateUrl: './user-requests.component.html',
-  styleUrls: ['./user-requests.component.css']
+  selector: 'app-invitations',
+  templateUrl: './invitations.component.html',
+  styleUrls: ['./invitations.component.css']
 })
-export class UserRequestsComponent {
-  requests : any ;
-  isAdmin : any 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any  ,  private AuthService : AuthService , private DialogRef : MatDialogRef<UserRequestsComponent> ){}
+export class InvitationsComponent {
+  isAdmin : any ; 
+  invitations : any ;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any ,private OrganisationService : OrganisationService , private dialogRef : MatDialogRef<InvitationsComponent> ){}
   ngOnInit(){
-    this.AuthService.getrequests().subscribe(response => { this.requests = response ; console.log(response)}) ;
+    this.OrganisationService.getInvitations().subscribe(response => { this.invitations = response ; console.log(response)}) ;
     this.isAdmin = this.data.admin
-
   }
-  Accept(request:any){
+  Accept(invitation:any){
     
-    this.AuthService.acceptRequest(request.id).subscribe( response => { 
+    this.OrganisationService.acceptInvitation(invitation.id).subscribe( response => { 
       console.log();
-      this.DialogRef.close();
+      this.dialogRef.close();
 
     })
   }
-  Reject(request:any){
-    this.AuthService.RejectedRequest(request.id).subscribe( response => { 
+  Delete(invitaiton:any){
+    this.OrganisationService.deleteInvitation(invitaiton.id).subscribe( response => { 
       console.log();
-      this.DialogRef.close();
+      this.dialogRef.close();
 
   })
 
 }
-Delete(request :any){}
-
-
- getTimeDifference(x : any): string {
+getTimeDifference(x : any): string {
   const specifiedTime: Date = new Date(x);
   const currentTime: Date = new Date();
   const timeDifference: number = currentTime.getTime() - specifiedTime.getTime();
@@ -61,7 +56,4 @@ Delete(request :any){}
     return `${secondsDifference} second${secondsDifference > 1 ? 's' : ''} ago`;
   }
 }
-
-
-
 }

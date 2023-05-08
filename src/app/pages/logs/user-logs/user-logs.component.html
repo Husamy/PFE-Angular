@@ -2,13 +2,15 @@
     <!-- Card Header - Dropdown -->
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">Logs</h6>
-      <div>
-        <input type="text" [(ngModel)]="filterBy" placeholder="Filter by owner or action" (keyup)="filterLogs()">
-        <button class="btn btn-primary" (click)="filterLogs()">Filter</button>
-      </div>
+    
     </div>
     <div class="card-body">
       <div class="list-group">
+        <div class="justify-content-center mb-2">
+          <div class="form-outline">
+            <input matInput class="form-control" style="border-radius: 2rem;" [(ngModel)]="filterBy" placeholder="Filter by owner or action" (keyup)="filterLogs()">
+          </div>
+        </div>
         <a class="list-group-item list-group-item-action d-flex gap-3 py-3" *ngFor="let log of filteredLogs" style="margin-bottom: 10px;">
           <div class="d-flex gap-2 w-100 justify-content-between">
             <div>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder , FormGroup} from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
+import { OrganisationService } from 'src/app/services/organisation.service';
 
 @Component({
   selector: 'app-add-organisation',
@@ -11,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class AddOrganisationComponent {
   form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder , private authservice : AuthService, private dialogRef: MatDialogRef<AddOrganisationComponent>) {
+  constructor(private formBuilder: FormBuilder , private OrganisationService : OrganisationService,private authservice : AuthService, private dialogRef: MatDialogRef<AddOrganisationComponent>) {
     this.form = this.formBuilder.group({
       name: '',
       message: '',
@@ -28,8 +29,7 @@ export class AddOrganisationComponent {
       fromdata.append('organisation', this.form.value.name);
       fromdata.append('message', this.form.value.message);
       console.log(fromdata);
-      this.authservice.joincompany(fromdata).subscribe(response => {
-        window.location.reload()
+      this.OrganisationService.joinCompany(fromdata).subscribe(response => {
         this.dialogRef.close();
       });
     } else {

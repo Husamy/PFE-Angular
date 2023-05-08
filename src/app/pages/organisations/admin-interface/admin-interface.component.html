@@ -1,4 +1,4 @@
-<div class="container px-4 py-5" id="hanging-icons">
+<div class="container"  id="hanging-icons">
   <div class="row align-items-center">
     <h2 class="pb-2 border-bottom col">Dashboard</h2>
     <div class="col text-end m-2">
@@ -9,23 +9,25 @@
         <i class="bi bi-window-dash"></i> Join Requests
       </button>
       <button mat-raised-button class="button m-2" color="link" (click)="sendinvitation()">
-        <i class="bi bi-person-add"></i> Send invitation
+        <i class="bi bi-person-add"></i>
+      </button>
+      <button mat-raised-button class="button m-2" color="link" [routerLink]="'SigingRequest/'">
+        <i class="bi bi-vector-pen"></i>Sign Requests
       </button>
     </div>
   </div>
 <div class="row">
   <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card border-left-success shadow h-100 py-2" >
           <div class="card-body">
               <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                          Documents Added Today</div>
+                          Documents Added</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">{{ documentsAddedToday }}</div>
                   </div>
                   <div class="col-auto">
-                      <i class="fas fa-file-alt fa-2x text-gray-300"></i>
-                  </div>
+                    <i class="bi bi-file-plus" style="color:rgb(175, 165, 165); font-size: xx-large"></i>                  </div>
               </div>
           </div>
       </div>
@@ -38,11 +40,11 @@
               <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                          Documents Added This Month</div>
+                          Invitations</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">{{ documentsAddedThisMonth }}</div>
                   </div>
                   <div class="col-auto">
-                      <i class="fas fa-file-alt fa-2x text-gray-300"></i>
+                      <i class="bi bi-send-dash" style="color: gray; font-size: xx-large;"></i>
                   </div>
               </div>
           </div>
@@ -55,13 +57,12 @@
           <div class="card-body">
               <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Documents Added This Year
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Signed Documents
                       </div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">{{ documentsAddedThisYear }}</div>
                   </div>
                   <div class="col-auto">
-                      <i class="fas fa-file-alt fa-2x text-gray-300"></i>
-                  </div>
+                    <i class="bi bi-file-earmark-check" style="color:gray ; font-size: xx-large;" ></i>                  </div>
               </div>
           </div>
       </div>
@@ -78,7 +79,7 @@
                       <div class="h5 mb-0 font-weight-bold text-gray-800">{{ requestsReceived }}</div>
                   </div>
                   <div class="col-auto">
-                      <i class="fas fa-comments fa-2x text-gray-300"></i>
+                      <i class="bi bi-person-add" style="color:gray ; font-size: xx-large;"></i>
                   </div>
               </div>
           </div>
@@ -94,46 +95,46 @@
         <div class="card shadow mb-4 border-0">
           <!-- Card Header - Dropdown -->
           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Last 3 users joined</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Requests</h6>
           </div>
           <!-- Card Body -->
           <div class="card-body">
             <div class="list-group">
-              <a  class="list-group-item list-group-item-action d-flex gap-3 py-3" *ngFor="let log of logs" style="margin-bottom: 10px;">
-                <img src="https://www.vhv.rs/dpng/d/544-5445462_people-icons-png-flat-person-icon-png-transparent.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+              <a class="list-group-item list-group-item-action d-flex gap-3 py-3" *ngFor="let request of myrequests" style="margin-bottom: 10px;">
+                <img src="https://www.vhv.rs/dpng/d/544-5445462_people-icons-png-flat-person-icon-png-transparent.png" alt="twbs" width="40" height="40" class="rounded-circle flex-shrink-0">
                 <div class="d-flex gap-2 w-100 justify-content-between">
                   <div>
-                    <h6 class="mb-0">{{ log.name }} joined on {{ log.joinedDate }} </h6>
+                    <h6 class="mb-0">{{ request.requested_by }} send a request on  <span> {{ request.created_at }}  </span> </h6>
+                    <p class="mb-0">{{ request.message }}</p>
                   </div>
                 </div>
               </a>
             </div>
-            
           </div>
         </div>
         
+        
     
-          <!-- Collapsable Card Example -->
-          <div class="card shadow mb-4 border-0">
-            <!-- Card Header - Dropdown -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              <h6 class="m-0 font-weight-bold text-primary">Join Requests</h6>
-            </div>
-            <!-- Card Body -->
-            <div class="card-body">
-              <div class="list-group">
-             <!--<a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" *ngFor="let request of Requests" style="margin-bottom: 10px;">
-                  <img src="https://www.vhv.rs/dpng/d/544-5445462_people-icons-png-flat-person-icon-png-transparent.png" alt="user-avatar" width="32" height="32" class="rounded-circle flex-shrink-0">
-                  <div class="d-flex flex-column w-100 justify-content-between">
-                    <div>
-                      <h6 class="mb-0">{{ request.email }}</h6>
-                      <p class="mb-0">{{ request.message }}</p>
-                    </div>
-                    <small class="opacity-50 text-nowrap">{{ request.date }}</small>
+        <div class="card shadow mb-4 border-0">
+          <!-- Card Header - Dropdown -->
+          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Invitations</h6>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body">
+            <div class="list-group">
+              <a class="list-group-item list-group-item-action d-flex gap-3 py-3" *ngFor="let invitation of myinvitations" style="margin-bottom: 10px;">
+                <img src="https://www.vhv.rs/dpng/d/544-5445462_people-icons-png-flat-person-icon-png-transparent.png" alt="twbs" width="40" height="40" class="rounded-circle flex-shrink-0">
+                <div class="d-flex gap-2 w-100 justify-content-between">
+                  <div>
+                    <h6 class="mb-0">{{ invitation.guest }} received an invitation on  <span> {{ invitation.created_at }}  </span> </h6>
+                    <p class="mb-0">{{ invitation.organisation }} - {{ invitation.request_status }}</p>
                   </div>
-                </a>
-              </div> -->
+                </div>
+              </a>
             </div>
           </div>
+        </div>
+        
   </div>
 </div>

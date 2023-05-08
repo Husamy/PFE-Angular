@@ -65,4 +65,5 @@ export class DocumentLogsComponent {
 
     this.filteredLogs = filteredLogs;
   }
+  
 }

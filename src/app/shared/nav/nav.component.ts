@@ -22,6 +22,7 @@ export class NavComponent {
   }
 
  
-  logout() {
-  this.authservice.logout();  }
+  async logout() {
+  await this.authservice.logout();
+  window.location.reload(); }
 }

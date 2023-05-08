@@ -1,10 +1,8 @@
-import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup , Validators} from '@angular/forms';
-import { Router } from '@angular/router';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialogRef,  } from '@angular/material/dialog';
 import { DocumentService } from 'src/app/services/document.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-document',
@@ -15,12 +13,9 @@ export class AddDocumentComponent {
   form: FormGroup;
   files: File[] = [];
 
-  constructor(private formBuilder: FormBuilder , private docservice : DocumentService , private dialogRef: MatDialogRef<AddDocumentComponent>) {
+  constructor( private snackBar: MatSnackBar, private formBuilder: FormBuilder , private docservice : DocumentService , private dialogRef: MatDialogRef<AddDocumentComponent>) {
     this.form = this.formBuilder.group({
-      title: '',
       description: '',
-      privacy: '',
-      type :''
     });
   }
 
@@ -44,9 +39,19 @@ export class AddDocumentComponent {
     formdata.append('description',this.form.get('description')?.value);
     formdata.append('fileDoc',file);
   
-    await this.docservice.add(formdata).toPromise();
+   this.docservice.add(formdata).subscribe((response) => 
+   {
+    if (response.status == 201) {
+      this.snackBar.open('Document added successfully!', 'Close',
+        {
+          duration: 3000,
+
+        });
+    }
+
+
     this.dialogRef.close();
-    window.location.reload();
-  
+  }
+    );
   }
 }

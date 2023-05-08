@@ -3,7 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environements/env';
-
+import { Document } from '../interfaces/document';
+import { Request } from '../interfaces/request';
+import { SignRequest } from '../interfaces/sign-request';
 @Injectable({
   providedIn: 'root'
 })
@@ -31,9 +33,9 @@ export class DocumentService {
     );
   }
 
-  get(): Observable<any[]> {
+  get(): Observable<Document[]> {
     const url = `${this.baseUrl}/documents/doc/`;
-    return this.http.get<any[]>(url).pipe(
+    return this.http.get<Document[]>(url).pipe(
       catchError((error: any) => {
         return throwError(error);
       })
@@ -58,9 +60,9 @@ export class DocumentService {
     );
   }
 
-  getrequests(): Observable<any> {
+  getrequests(): Observable<SignRequest[]> {
     const url = `${this.baseUrl}/documents/requests/`;
-    return this.http.get<any>(url).pipe(
+    return this.http.get<SignRequest[]>(url).pipe(
       catchError((error: any) => {
         return throwError(error);
       })
@@ -75,7 +77,24 @@ export class DocumentService {
       })
     );
   }
-
+  acceptrequest(id:any){
+    const url = `${this.baseUrl}/documents/requestupdate/${id}/`;
+    const data =  { request_status : 'Accepted'}
+    return this.http.put<any>(url,data).pipe(
+      catchError((error: any) => {
+        return throwError(error);
+      })
+    );
+  }
+  rejectrequest(id:any){
+    const url = `${this.baseUrl}/documents/requests/${id}/`;
+    const data =  { request_status : 'Rejected'}
+    return this.http.put<any>(url,data).pipe(
+      catchError((error: any) => {
+        return throwError(error);
+      })
+    );
+  }
   download(id: any): Observable<any> {
     const url = `${this.baseUrl}/documents/doc/${id}/download/`;
     return this.http.get<any>(url).pipe(

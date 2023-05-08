@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { ConfirmDeleteComponent } from '../dialog/confirm-delete/confirm-delete.component';
+import { OrganisationService } from 'src/app/services/organisation.service';
 
 @Component({
   selector: 'app-join-requests',
@@ -31,9 +32,9 @@ export class JoinRequestsComponent {
     },
   ];
   
-  constructor(private authservice : AuthService , public dialog: MatDialog){}
+  constructor(private OrganisationService : OrganisationService , public dialog: MatDialog){}
   ngOnInit(){
-    this.authservice.getrequests().subscribe(response => {this.requests = response, console.log(response)} )
+    this.OrganisationService.getRequests().subscribe(response => {this.requests = response, console.log(response)} )
   }
   
 
@@ -57,7 +58,7 @@ export class JoinRequestsComponent {
       data: {
         message: `Are you sure you want to delete ${request.id}?`,
         confirmFunction: () => {
-          this.authservice.deleteInvitation(request.id);
+          this.OrganisationService.deleteInvitation(request.id);
         }
       },
     });
@@ -66,6 +67,6 @@ export class JoinRequestsComponent {
     });
 }
 Accept(request:any){
-  this.authservice.acceptRequest(request.id).subscribe(response => { console.log(response)})
+  this.OrganisationService.acceptRequest(request.id).subscribe(response => { console.log(response)})
 }
 }

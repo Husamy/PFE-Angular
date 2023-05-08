@@ -15,14 +15,13 @@
             </span>
           </div>
           <p class="card-text mb-auto" style="margin-top: 0.5rem;">{{ document.description }}</p>
-          <button mat-raised-button style="margin-top: 0.5rem;" color="warn" (click)="deleteDocument(document)"><i class="bi bi-folder-minus"></i>     Delete</button>
-          <button mat-raised-button style="margin-top: 0.5rem;" color="primary" (click)="contactOwner(document)"><i class="bi bi-chat-left-text"></i>  Contact Owner</button>
+          <button mat-raised-button style="margin-top: 0.5rem;" color="primary" (click)="delete(document)"><i class="bi bi-download m-2"></i>     Download</button>
         </div>
         <div class="col-auto d-none d-lg-block">
-          <ng-container *ngIf="document.type === 'pdf'">
+          <ng-container *ngIf="document.filetype === '.pdf'">
             <i class="bi bi-file-earmark-pdf text-danger" style="font-size: 4rem; "></i>
           </ng-container>
-          <ng-container *ngIf="document.type === 'xml'">
+          <ng-container *ngIf="document.filetype === '.xml'">
             <i class="bi bi-file-earmark-code text-warning" style="font-size: 5rem; height: 250px; width: 200px;"></i>
           </ng-container>
         </div>

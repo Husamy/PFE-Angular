@@ -1,3 +1,4 @@
+import { style } from '@angular/animations';
 import { UserdataService } from './../../userdata.service';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,6 +7,7 @@ import { AddDocumentComponent } from 'src/app/pages/documents/add-document/add-d
 import { AddOrganisationComponent } from 'src/app/pages/organisations/add-organisation/add-organisation.component';
 import { CreateOrganisationComponent } from 'src/app/pages/organisations/create-organisation/create-organisation.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { OrganisationService } from 'src/app/services/organisation.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,7 +17,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class SidebarComponent {
   userOrganization : any
     organisation : any
-constructor(private UserdataService : UserdataService,private authservice:AuthService , private router : Router, private dialog : MatDialog){}
+    isSidebarVisible: boolean = false;
+constructor(private UserdataService : UserdataService,private OrganisationService:OrganisationService , private router : Router, private dialog : MatDialog){}
 
 ngOnInit() {
   this.UserdataService.getSharedUserData().subscribe(userData => {
@@ -34,7 +37,7 @@ joinCompany(){
 dialogRef.afterClosed().subscribe(result => {
   const fromdata = new FormData() ; 
   
-  this.authservice.joincompany(fromdata).subscribe(response => {console.log(response)});
+  this.OrganisationService.joinCompany(fromdata).subscribe(response => {console.log(response)});
 });
 }
 createCompany(){
@@ -48,5 +51,12 @@ createCompany(){
    
     window.location.reload()
   });
+}
+showSidebar() {
+  this.isSidebarVisible = true;
+}
+
+hideSidebar() {
+  this.isSidebarVisible = false;
 }
 }
