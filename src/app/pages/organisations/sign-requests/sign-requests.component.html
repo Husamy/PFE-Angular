@@ -42,8 +42,8 @@
                       </ng-template>
                     </td>
                                         <td class="align-middle text-center">
-                      <span class="badge " [ngClass]="{'bg-success': request.document.signed_status === 'Signed', 'bg-warning': request.document.signed_status !== 'Signed' && request.document.signed_status !== null, 'bg-danger': request.document.signed_status === 'Not Signed', 'bg-white': request.document.signed_status === null}">
-                        <i></i> {{ request.document.signed_status || 'Waiting' }}
+                      <span class="badge " [ngClass]="{'bg-success': request.request_status === 'Accepted', 'bg-warning': request.request_status === 'In Progress' && request.request_status !== null, 'bg-danger': request.request_status === 'Rejected', 'bg-white': request.request_status === null}">
+                        <i></i> {{ request.request_status || 'Waiting' }}
                       </span>
                     </td>
                     

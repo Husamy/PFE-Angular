@@ -60,24 +60,20 @@ addrequest(document: any): void {
     width: '400px',
     data: {
       message: `Are you sure you want to sign  ${document.title}?`,
+      document_id : document.id
     },
   });
-  dialogRef.afterClosed().subscribe(result => {
-    const fromdata = new FormData() ; 
-    fromdata.append('document_id',document.id);
-    this.documentservice.addrequest(fromdata).subscribe(
-      response =>
-      {
-   
-        this.snackbar.open('Request added successfully!', 'Close', {
-          duration: 2000,});
-          this.ngOnInit();
-        }
-      );
-  });
+  dialogRef.afterClosed().subscribe(
+    respone => { 
+      this.ngOnInit();
+
+    }
+  )
+  }
+    
 
   
-}
+
 
 toggleEditMode(document: Document) {
   this.isEditing = true

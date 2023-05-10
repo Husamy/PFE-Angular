@@ -67,6 +67,14 @@ export class OrganisationService {
       })
     );
   }
+  getorg(){
+    const url =`hhttp://172.25.6.208:8001/api/createorg/`;
+    return this.http.get(url).pipe(
+      catchError((error:any)=> {
+        return throwError(error);
+      })
+    )
+  }
 
   acceptRequest(id: any): Observable<any> {
     const url = `${this.requestsUrl}update/${id}/`;

@@ -9,10 +9,12 @@ import { Clipboard } from '@angular/cdk/clipboard';
   styleUrls: ['./certificate.component.css']
 })
 export class CertificateComponent {
-  document : Document ; 
+  cert:any ;
   @ViewChild('content') content: any;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any , private clipboard: Clipboard ,private docservice : DocumentService) {
-    this.document = data 
+    console.log(data.id)
+    this.docservice.getcert(data.id).subscribe(response => { this.cert = response})
+
   }
 
   copyContent() {

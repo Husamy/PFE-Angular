@@ -13,6 +13,35 @@
               </div>
             </div>
           </div>
+          
+          <div class="mb-3">
+            <label for="countrySelect">Choose Country:</label>
+            <select class="form-select" id="countrySelect" formControlName="country" name="countrySelect">
+              <option *ngFor="let country of countries" [value]="country.alpha2">{{country.name}}</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="title" class="form-label">Province</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text"><i class="bi bi-pin-map-fill"></i></span>
+              <input type="text" class="form-control" formControlName="provience" id="name" placeholder="Province" required>
+              <div class="invalid-feedback">
+                Province is required
+              </div>
+            </div>
+          </div>
+          
+        
+          <div class="mb-3">
+            <label for="locality_name" class="form-label">locality name</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text"> <i class="bi bi-geo-fill"></i></span>
+              <input type="text" class="form-control" formControlName="locality" id="locality_name" placeholder="locality_name" required>
+              <div class="invalid-feedback">
+                locality name is required
+              </div>
+            </div>
+          </div>
           <div class="mb-3">
             <label for="Description" class="form-label">description <span class="text-muted"></span></label>
             <textarea class="form-control" formControlName="description" id="Description" placeholder=" Please enter decribe your company !"></textarea>
@@ -22,8 +51,8 @@
           </div>
   
           <div class="text-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="button" class="btn btn-secondary ms-2" (click)="onCancel()">Cancel</button>
+            <button type="submit" mat-raised-button  style="margin:5px" color="primary" >Submit</button>
+            <button type="button" mat-raised-button  (click)="onCancel()">Cancel</button>
           </div>
         </form>
       </div>

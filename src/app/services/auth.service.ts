@@ -35,6 +35,9 @@ export class AuthService {
   logout(): Observable<any> {
     this.cookieService.delete(this.TOKEN_KEY);
     this.cookieService.delete(this.REFRESH_KEY);
+    localStorage.removeItem(this.REFRESH_KEY)
+    localStorage.removeItem(this.TOKEN_KEY)
+
     return this.http.post(`${this.baseurl}logout/`, {}).pipe(
       catchError((error) => {
         return throwError(error);
@@ -50,16 +53,20 @@ export class AuthService {
     const expirationDate = new Date();
     expirationDate.setTime(expirationDate.getTime() + (60 * 60 * 1000));
     this.cookieService.set(this.TOKEN_KEY, token, expirationDate, '/', '', true, 'Strict');
+    localStorage.setItem(this.TOKEN_KEY,token)
   }
 
-  getRefreshToken(): string {
-    return this.cookieService.get(this.REFRESH_KEY);
+  getRefreshToken() {
+    //return this.cookieService.get(this.REFRESH_KEY);
+    return localStorage.getItem(this.REFRESH_KEY)
   }
 
   setRefreshToken(token: string): void {
     const expirationDate = new Date();
     expirationDate.setTime(expirationDate.getTime() + (30 * 24 * 60 * 60 * 1000));
     this.cookieService.set(this.REFRESH_KEY, token, expirationDate, '/', '', true, 'Strict');
+    localStorage.setItem(this.REFRESH_KEY,token)
+
   }
 
   deleteToken() {
@@ -106,7 +113,10 @@ export class AuthService {
     const url = `${this.baseurl}login/`;
     return this.http.post<any>(url, loginObj).pipe(
       map((response) => {
+        console.log(response.access)
         this.setAccessToken(response.access);
+        console.log()
+        console.log("pass")
         this.setRefreshToken(response.refresh);
         return response;
       }),
@@ -117,7 +127,8 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!this.cookieService.get(this.TOKEN_KEY);
+    //return !!this.cookieService.get(this.TOKEN_KEY);
+    return !!localStorage.getItem(this.TOKEN_KEY)
   }
   isAdmin(): Observable<boolean> {
     return combineLatest([

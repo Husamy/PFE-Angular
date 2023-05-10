@@ -77,6 +77,14 @@ export class DocumentService {
       })
     );
   }
+  getcert(id:any){
+    const url = `http://172.25.6.208:8005/api/getCert/${id}/`;
+    return this.http.get<any>(url).pipe(
+      catchError((error: any) => {
+        return throwError(error);
+      })
+    );
+  }
   acceptrequest(id:any){
     const url = `${this.baseUrl}/documents/requestupdate/${id}/`;
     const data =  { request_status : 'Accepted'}
@@ -87,7 +95,7 @@ export class DocumentService {
     );
   }
   rejectrequest(id:any){
-    const url = `${this.baseUrl}/documents/requests/${id}/`;
+    const url = `${this.baseUrl}/documents/requestupdate/${id}/`;
     const data =  { request_status : 'Rejected'}
     return this.http.put<any>(url,data).pipe(
       catchError((error: any) => {

@@ -34,7 +34,13 @@ export class UserRequestsComponent {
   })
 
 }
-Delete(request :any){}
+Delete(request :any){
+  this.OrganisationService.deleteRequest(request.id).subscribe(response =>{
+    console.log()
+    this.ngOnInit()
+    
+  })
+}
 
 
  getTimeDifference(x : any): string {
