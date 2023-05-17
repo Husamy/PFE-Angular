@@ -1,6 +1,7 @@
 import { Document } from 'src/app/interfaces/document';
 import { DocumentService } from './../../../services/document.service';
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -11,13 +12,15 @@ import { Component } from '@angular/core';
 export class PublicDocumentsComponent {
   documents !: Document[]  
 
-  constructor(private DocumentService : DocumentService  ) {
+  constructor(private DocumentService : DocumentService , private SnackBar : MatSnackBar  ) {
     this.DocumentService.get().subscribe(response => {
       console.log('response');
         this.documents = response;
       });
    }
 
-delete(document:any){
+download(document:any){
+this.DocumentService.download(document.id).subscribe(response => {
+})
 }
 }

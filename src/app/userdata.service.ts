@@ -14,7 +14,7 @@ export class UserdataService {
   }
 
   loadUserData() {
-    this.http.get('http://172.25.6.208:8002/api/users/').subscribe(data => {
+    this.http.get('http://172.18.0.1:8002/api/users/').subscribe(data => {
       this.userData.next(data);
     });
   }

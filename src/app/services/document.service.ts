@@ -78,7 +78,7 @@ export class DocumentService {
     );
   }
   getcert(id:any){
-    const url = `http://172.25.6.208:8005/api/getCert/${id}/`;
+    const url = `http://172.28.0.1:8005/api/getCert/${id}/`;
     return this.http.get<any>(url).pipe(
       catchError((error: any) => {
         return throwError(error);
@@ -104,7 +104,7 @@ export class DocumentService {
     );
   }
   download(id: any): Observable<any> {
-    const url = `${this.baseUrl}/documents/doc/${id}/download/`;
+    const url = `${this.baseUrl}/documents/doc/${id}/download`;
     return this.http.get<any>(url).pipe(
       catchError((error: any) => {
         return throwError(error);
